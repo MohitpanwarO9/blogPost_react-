@@ -2,7 +2,12 @@ import React from 'react'
 
 function Register() {
   return (
-    <div>welcome to Register</div>
+    <form action='' className='register'>
+      <h2>Register</h2>
+      <input type='text' placeholder='Username'/>
+      <input type='password' placeholder='Password'/>
+      <button>Register</button>
+    </form>
   )
 }
 
