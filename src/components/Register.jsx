@@ -1,9 +1,11 @@
 import React from 'react'
 import { useState } from 'react'
 import axios from 'axios'
+import { Navigate } from 'react-router-dom';
 
 function Register() {
 
+  const [isRegister , setIsRegister] = useState(false);
   const [user, setUser] = useState({
     username : "",
     email : "",
@@ -15,8 +17,10 @@ function Register() {
     try {
         const response = await axios.post('http://localhost:5000/user/register',user);
 
-        if(response.status === 200){
+        if(response.status === 201){
           console.log(response);
+          alert("Register Successful")
+          setIsRegister(true);
         }
         
     } catch (error) {
@@ -33,8 +37,13 @@ function Register() {
       [name] : value
     })
 
-    console.log(user);
+    //console.log(user);
   }
+
+  if(isRegister)
+    {
+      return <Navigate to={'/login'}/>;
+    }
 
   return (
     <form onSubmit={handleSubmit} className='register' >
