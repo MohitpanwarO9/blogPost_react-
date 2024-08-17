@@ -1,6 +1,7 @@
 import axios from 'axios';
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { Navigate } from 'react-router-dom';
+import { UserContext } from '../userContext';
 
 function Login() {
 
@@ -10,20 +11,25 @@ function Login() {
   });
 
   const [redirect ,setRedirect] = useState(false);
+  const {setUserInfo} = useContext(UserContext);
+
 
   const handleOnSubmit = async(e)=>{
     e.preventDefault();
-    console.log(user);
 
-    const respons = await axios.post("http://localhost:5000/user/login",user);
-    console.log(respons);
-    if(respons.status === 200)
-    {
-      alert("Login Successful");
-      setRedirect(true);
-    }
-    else
-    {
+    const response = await fetch('http://localhost:5000/user/login',{
+      method: 'POST',
+      body : JSON.stringify(user),
+      headers: {'Content-Type':'application/json'},
+      credentials: 'include'
+    })
+    if(response.status === 200){
+        const userdata = await response.json();
+        setUserInfo(userdata);
+        setRedirect(true);
+    }else if(response.status === 404){
+      alert("User Not found");
+    }else{
       alert("Wrong Credentials")
     }
   }
@@ -46,8 +52,8 @@ function Login() {
   return (
     <form onSubmit={handleOnSubmit} className='login'>
       <h2>Login</h2>
-      <input type='text' placeholder='Email' name="email" value={user.email} onChange={handlOnChange}/>
-      <input type='password' placeholder='Password' name='password' value={user.password} onChange={handlOnChange}/>
+      <input type='text' placeholder='Email' name="email" value={user.email} onChange={handlOnChange} required/>
+      <input type='password' placeholder='Password' name='password' value={user.password} onChange={handlOnChange} required/>
       <button type='submit'>Login</button>
     </form>
   )
