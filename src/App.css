@@ -89,7 +89,7 @@ button{
     border-radius: 5px;
     padding: 7px 0px;
 }
-form h2{
+form.login h2, form.register h2{
     text-align: center;
     
 }
