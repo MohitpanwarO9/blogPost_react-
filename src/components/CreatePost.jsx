@@ -50,6 +50,7 @@ function CreatePost() {
             method : 'POST',
             'Content-Type' : 'multipart/form-data',
             body : data,
+            credentials : 'include',
         })
 
         if(response.status === 200){

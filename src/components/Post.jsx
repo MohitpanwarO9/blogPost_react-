@@ -1,18 +1,24 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { Link } from "react-router-dom";
 
-function Post() {
+function Post({_id,title,summary,content,coverphoto,author}) {
+
   return (
     <div className="post">
         <div className="image">
-          <img src="https://cupofjo.com/wp-content/uploads/2024/06/20240531_COJ_Article_020-scaled-fotor-20240611161335-768x523.jpg"/>
+          <Link to={`/post/${_id}`}>
+            <img src={"http://localhost:5000/"+coverphoto}/>
+          </Link>
         </div>
         <div className="text">
-          <h2>Title of the blog post</h2>
+          <Link to={`/post/${_id}`}>
+            <h2>{title}</h2>
+          </Link>
           <p className="info">
-            <a className="author">Mohit</a>
+            <a className="author">{author.username}</a>
             <time>2024-06-12</time>
           </p>
-          <p className="summary">descreption of the blog post  descreption of the blog post   descreption of the blog post   descreption of the blog post   descreption of the blog post   descreption of the blog post   descreption of the blog post   descreption of the blog post   
+          <p className="summary">{summary}   
           </p>
         </div>
       </div>
